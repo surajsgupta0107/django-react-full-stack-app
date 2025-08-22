@@ -2,12 +2,18 @@ schemaVersion: 1.2
 type: service
 name: backend
 runtime: python
+
 build:
   path: backend
   version: "3.11"
+
 run:
   command: gunicorn backend.wsgi:application --bind 0.0.0.0:$PORT
+
 endpoints:
   - name: http
-    port: 8000
     type: REST
+    networkVisibility: Public
+    context: /
+    service:
+      port: 8000
