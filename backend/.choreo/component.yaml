@@ -1,17 +1,18 @@
 schemaVersion: 1.2
-type: service
 name: backend
-runtime: python
+type: service
 
-build:
-  path: backend
-  version: "3.11"
-
-run:
-  command: gunicorn backend.wsgi:application --bind 0.0.0.0:$PORT
+implementation:
+  build:
+    language: python
+    version: "3.11"
+    buildCommands:
+      - pip install -r requirements.txt
+  run:
+    command: python manage.py runserver 0.0.0.0:$PORT
 
 endpoints:
-  - name: http
+  - name: "REST API"
     type: REST
     networkVisibility: Public
     context: /
